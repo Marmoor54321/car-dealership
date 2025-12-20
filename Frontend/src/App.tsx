@@ -1,30 +1,38 @@
-import './App.css'
-import axios from 'axios';
-import {useState, useEffect} from 'react';
-import type { Car } from './Models/Car';
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { CarProvider } from "./context/CarContext";
 
+import Home from "./pages/Home";
+import CarDetails from "./pages/CarDetails";
+import CarForm from "./pages/CarForm";
+import NotFound from "./pages/NotFound";
 
 function App() {
-
-const [array, setArray] = useState<Car[]>([]);
-
-const fetchData = async () => {
-  const response = await axios.get("http://localhost:8000/");
-  setArray(response.data.carInfo);
-}
-
-useEffect(() => {
-  fetchData();
-}, [])
-
   return (
-    <ul>
+    <CarProvider>
+      <BrowserRouter>
+        <nav
+          style={{ padding: "10px", background: "#eee", marginBottom: "20px" }}
+        >
+          <Link to="/" style={{ marginRight: "10px" }}>
+            Lista Aut
+          </Link>
+          <Link to="/add">Dodaj Auto</Link>
+        </nav>
 
-      {array?.map((car: Car, index: number) => (
-        <li key={index}>{car.title} {car.description} {car.price}</li> 
-      ))}
-    </ul>
-  )
+        <Routes>
+          <Route path="/" element={<Home />} />
+
+          <Route path="/add" element={<CarForm />} />
+
+          <Route path="/edit/:id" element={<CarForm />} />
+
+          <Route path="/details/:id" element={<CarDetails />} />
+
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </BrowserRouter>
+    </CarProvider>
+  );
 }
 
-export default App
+export default App;
