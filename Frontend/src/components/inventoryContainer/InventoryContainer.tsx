@@ -13,9 +13,8 @@ export const InventoryContainer = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOption, setSortOption] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 3; // Możesz zmienić np. na 6
+  const itemsPerPage = 3;
 
-  // Pobieranie danych (bez zmian)
   useEffect(() => {
     const fetchCars = async () => {
       dispatch({ type: "SET_LOADING", payload: true });
@@ -29,18 +28,13 @@ export const InventoryContainer = () => {
     fetchCars();
   }, [dispatch]);
 
-  // --- LOGIKA BIZNESOWA (Live Search + Sort + Pagination) ---
-
-  // 1. Reset strony na 1, gdy zmieniamy filtry (UX)
   useEffect(() => {
     setCurrentPage(1);
   }, [searchQuery, sortOption]);
 
-  // 2. Filtrowanie i Sortowanie
   const processCars = () => {
-    let result = [...state.cars]; // Kopia tablicy, żeby nie mutować Contextu
+    let result = [...state.cars];
 
-    // A. Filtr wyszukiwania (Live Search)
     if (searchQuery) {
       const lowerQuery = searchQuery.toLowerCase();
       result = result.filter(
@@ -50,7 +44,6 @@ export const InventoryContainer = () => {
       );
     }
 
-    // B. Sortowanie
     if (sortOption) {
       result.sort((a, b) => {
         switch (sortOption) {
@@ -73,7 +66,6 @@ export const InventoryContainer = () => {
 
   const filteredSortedCars = processCars();
 
-  // 3. Paginacja (Obliczanie wycinka tablicy)
   const totalPages = Math.ceil(filteredSortedCars.length / itemsPerPage);
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -81,8 +73,6 @@ export const InventoryContainer = () => {
     indexOfFirstItem,
     indexOfLastItem
   );
-
-  // --- RENDEROWANIE ---
 
   if (state.loading)
     return (
@@ -99,7 +89,6 @@ export const InventoryContainer = () => {
     <div className="inventory-container">
       <h2>Nasza Oferta</h2>
 
-      {/* Panel Filtrów */}
       <FilterPanel
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
@@ -121,7 +110,6 @@ export const InventoryContainer = () => {
         </UniversalButton>
       </div>
 
-      {/* Lista aut (wyświetlamy tylko currentCars - te na obecnej stronie) */}
       {currentCars.length > 0 ? (
         <div
           className={`cars-layout ${
@@ -138,7 +126,6 @@ export const InventoryContainer = () => {
         </p>
       )}
 
-      {/* Paginacja */}
       <PaginationControl
         currentPage={currentPage}
         totalPages={totalPages}

@@ -28,7 +28,7 @@ export const FilterPanel = ({
         onChange={(e) => onSortChange(e.target.value)}
         className="sort-select"
       >
-        <option value="">-- Domyślne --</option>
+        <option value="">Filtruj</option>
         <option value="price_asc">Cena: Rosnąco</option>
         <option value="price_desc">Cena: Malejąco</option>
         <option value="year_asc">Rok: Najstarsze</option>
