@@ -1,0 +1,16 @@
+.pagination-control {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.page-info {
+  font-weight: bold;
+}
+
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}

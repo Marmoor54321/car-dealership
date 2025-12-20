@@ -1,0 +1,34 @@
+
+.inventory-container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.inventory-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.grid-view {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.list-view {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.list-view .car-card {
+    flex-direction: row;
+}
+
+.list-view .car-image-placeholder img {
+    width: 300px;
+    height: 100%;
+}

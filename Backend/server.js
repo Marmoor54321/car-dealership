@@ -53,6 +53,53 @@ let cars = [
       spalanie: 7.0
     },
     historiaSerwisowa: []
+  },
+  {
+    id: 4,
+    marka: "Chevrolet",
+    model: "Trax",
+    cena: 60000,
+    rokProdukcji: 2016,
+    dostepny: true,
+    daneTechniczne: {
+      silnik: "1.8 Hybrid",
+      moc: 122,
+      spalanie: 5.2
+    },
+    historiaSerwisowa: [
+      { opis: "Wymiana oleju", data: "2023-01-15" },
+      { opis: "Wymiana klocków hamulcowych", data: "2023-06-20" }
+    ]
+  },
+  {
+    id: 5,
+    marka: "Opel",
+    model: "Fury",
+    cena: 11000,
+    rokProdukcji: 2003,
+    dostepny: false,
+    daneTechniczne: {
+      silnik: "Benzyna 2.0",
+      moc: 110,
+      spalanie: 7.5
+    },
+    historiaSerwisowa: [
+      { opis: "Wymiana filtrów", data: "2024-02-10" }
+    ]
+  },
+  {
+    id: 6,
+    marka: "Mazda",
+    model: "Drive",
+    cena: 22000,
+    rokProdukcji: 2011,
+    dostepny: false,
+    daneTechniczne: {
+      silnik: "1.5 EcoBoost",
+      moc: 150,
+      spalanie: 7.0
+    },
+    historiaSerwisowa: []
   }
 ];
 
