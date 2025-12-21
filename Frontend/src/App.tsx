@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import CarDetails from "./pages/CarDetails";
 import CarForm from "./pages/CarForm";
 import NotFound from "./pages/NotFound";
+import CarManagement from "./pages/CarManagement";
 
 function App() {
   return (
@@ -14,11 +15,15 @@ function App() {
         <Link to="/" style={{ marginRight: "10px" }}>
           Lista Aut
         </Link>
-        <Link to="/add">Dodaj Auto</Link>
+        <Link to="/manage" style={{ marginRight: "10px" }}>
+          Panel zarządzania autami
+        </Link>
       </nav>
 
       <Routes>
         <Route path="/" element={<Home />} />
+
+        <Route path="/manage" element={<CarManagement />} />
 
         <Route path="/add" element={<CarForm />} />
 

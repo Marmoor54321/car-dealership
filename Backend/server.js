@@ -1,5 +1,5 @@
-import express from 'express';
-import cors from 'cors';
+import express from "express";
+import cors from "cors";
 const app = express();
 const PORT = 3000;
 
@@ -17,12 +17,12 @@ let cars = [
     daneTechniczne: {
       silnik: "1.8 Hybrid",
       moc: 122,
-      spalanie: 5.2
+      spalanie: 5.2,
     },
     historiaSerwisowa: [
       { opis: "Wymiana oleju", data: "2023-01-15" },
-      { opis: "Wymiana klocków hamulcowych", data: "2023-06-20" }
-    ]
+      { opis: "Wymiana klocków hamulcowych", data: "2023-06-20" },
+    ],
   },
   {
     id: 2,
@@ -34,11 +34,9 @@ let cars = [
     daneTechniczne: {
       silnik: "2.0 Diesel",
       moc: 190,
-      spalanie: 6.5
+      spalanie: 6.5,
     },
-    historiaSerwisowa: [
-      { opis: "Wymiana filtrów", data: "2024-02-10" }
-    ]
+    historiaSerwisowa: [{ opis: "Wymiana filtrów", data: "2024-02-10" }],
   },
   {
     id: 3,
@@ -50,9 +48,9 @@ let cars = [
     daneTechniczne: {
       silnik: "1.5 EcoBoost",
       moc: 150,
-      spalanie: 7.0
+      spalanie: 7.0,
     },
-    historiaSerwisowa: []
+    historiaSerwisowa: [],
   },
   {
     id: 4,
@@ -64,12 +62,12 @@ let cars = [
     daneTechniczne: {
       silnik: "1.8 Hybrid",
       moc: 122,
-      spalanie: 5.2
+      spalanie: 5.2,
     },
     historiaSerwisowa: [
       { opis: "Wymiana oleju", data: "2023-01-15" },
-      { opis: "Wymiana klocków hamulcowych", data: "2023-06-20" }
-    ]
+      { opis: "Wymiana klocków hamulcowych", data: "2023-06-20" },
+    ],
   },
   {
     id: 5,
@@ -81,11 +79,9 @@ let cars = [
     daneTechniczne: {
       silnik: "Benzyna 2.0",
       moc: 110,
-      spalanie: 7.5
+      spalanie: 7.5,
     },
-    historiaSerwisowa: [
-      { opis: "Wymiana filtrów", data: "2024-02-10" }
-    ]
+    historiaSerwisowa: [{ opis: "Wymiana filtrów", data: "2024-02-10" }],
   },
   {
     id: 6,
@@ -97,25 +93,24 @@ let cars = [
     daneTechniczne: {
       silnik: "1.5 EcoBoost",
       moc: 150,
-      spalanie: 7.0
+      spalanie: 7.0,
     },
-    historiaSerwisowa: []
-  }
+    historiaSerwisowa: [],
+  },
 ];
 
 const getNextId = () => {
-    const maxId = cars.length > 0 ? Math.max(...cars.map(c => c.id)) : 0;
-    return maxId + 1;
+  const maxId = cars.length > 0 ? Math.max(...cars.map((c) => c.id)) : 0;
+  return maxId + 1;
 };
 
-
-app.get('/api/cars', (req, res) => {
+app.get("/api/cars", (req, res) => {
   res.json(cars);
 });
 
-app.get('/api/cars/:id', (req, res) => {
+app.get("/api/cars/:id", (req, res) => {
   const id = parseInt(req.params.id);
-  const car = cars.find(c => c.id === id);
+  const car = cars.find((c) => c.id === id);
 
   if (!car) {
     return res.status(404).json({ message: "Auto nie znalezione" });
@@ -123,22 +118,22 @@ app.get('/api/cars/:id', (req, res) => {
   res.json(car);
 });
 
-app.post('/api/cars', (req, res) => {
+app.post("/api/cars", (req, res) => {
   const newCar = {
     id: getNextId(),
-    ...req.body
+    ...req.body,
   };
-  
-  if(!newCar.historiaSerwisowa) newCar.historiaSerwisowa = [];
-  if(!newCar.daneTechniczne) newCar.daneTechniczne = {};
+
+  if (!newCar.historiaSerwisowa) newCar.historiaSerwisowa = [];
+  if (!newCar.daneTechniczne) newCar.daneTechniczne = {};
 
   cars.push(newCar);
   res.status(201).json(newCar);
 });
 
-app.put('/api/cars/:id', (req, res) => {
+app.put("/api/cars/:id", (req, res) => {
   const id = parseInt(req.params.id);
-  const index = cars.findIndex(c => c.id === id);
+  const index = cars.findIndex((c) => c.id === id);
 
   if (index === -1) {
     return res.status(404).json({ message: "Auto nie znalezione" });
@@ -148,10 +143,10 @@ app.put('/api/cars/:id', (req, res) => {
   res.json(cars[index]);
 });
 
-app.delete('/api/cars/:id', (req, res) => {
+app.delete("/api/cars/:id", (req, res) => {
   const id = parseInt(req.params.id);
   const initialLength = cars.length;
-  cars = cars.filter(c => c.id !== id);
+  cars = cars.filter((c) => c.id !== id);
 
   if (cars.length === initialLength) {
     return res.status(404).json({ message: "Auto nie znalezione" });
@@ -162,5 +157,4 @@ app.delete('/api/cars/:id', (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`Serwer backendu działa na porcie http://localhost:${PORT}`);
-
 });
