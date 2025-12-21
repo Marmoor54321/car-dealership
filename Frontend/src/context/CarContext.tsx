@@ -48,6 +48,7 @@ const carReducer = (state: CarState, action: Action): CarState => {
 
 interface CarContextType {
   state: CarState;
+  dispatch: React.Dispatch<Action>;
   getCars: () => Promise<void>;
   addCar: (car: Omit<Car, "id">) => Promise<void>;
   updateCar: (id: number, car: Partial<Car>) => Promise<void>;
@@ -110,7 +111,7 @@ export const CarProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <CarContext.Provider
-      value={{ state, getCars, addCar, updateCar, deleteCar }}
+      value={{ state, dispatch, getCars, addCar, updateCar, deleteCar }}
     >
       {children}
     </CarContext.Provider>
