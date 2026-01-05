@@ -27,7 +27,6 @@ const CarForm = () => {
     historiaSerwisowa: [],
   });
 
-  // KROK A: Jeśli odświeżysz stronę (F5) i stan jest pusty, pobierz auta z API
   useEffect(() => {
     if (isEditMode && state.cars.length === 0) {
       getCars();
@@ -63,21 +62,43 @@ const CarForm = () => {
   };
 
   return (
-    <div style={{ padding: "20px", maxWidth: "500px", margin: "0 auto" }}>
-      <h2>{isEditMode ? "Edytuj Dane Pojazdu" : "Dodaj Nowy Pojazd"}</h2>
+    <div
+      style={{
+        padding: "20px",
+        maxWidth: "600px",
+        margin: "40px auto",
+        backgroundColor: "#f9f9f9",
+        borderRadius: "8px",
+        boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
+      }}
+    >
+      <h2 style={{ marginBottom: "20px", textAlign: "center" }}>
+        {isEditMode ? "Edytuj Dane Pojazdu" : "Dodaj Nowy Pojazd"}
+      </h2>
 
       <form
         onSubmit={handleSubmit}
         style={{ display: "flex", flexDirection: "column", gap: "15px" }}
       >
-        <div>
-          <label style={{ display: "block", marginBottom: "5px" }}>
+        <div className="form-group">
+          <label
+            style={{
+              fontWeight: "bold",
+              display: "block",
+              marginBottom: "5px",
+            }}
+          >
             Marka:
           </label>
           <input
             type="text"
             required
-            style={{ width: "100%", padding: "8px" }}
+            style={{
+              width: "100%",
+              padding: "10px",
+              borderRadius: "4px",
+              border: "1px solid #ccc",
+            }}
             value={formData.marka}
             onChange={(e) =>
               setFormData({ ...formData, marka: e.target.value })
@@ -85,14 +106,25 @@ const CarForm = () => {
           />
         </div>
 
-        <div>
-          <label style={{ display: "block", marginBottom: "5px" }}>
+        <div className="form-group">
+          <label
+            style={{
+              fontWeight: "bold",
+              display: "block",
+              marginBottom: "5px",
+            }}
+          >
             Model:
           </label>
           <input
             type="text"
             required
-            style={{ width: "100%", padding: "8px" }}
+            style={{
+              width: "100%",
+              padding: "10px",
+              borderRadius: "4px",
+              border: "1px solid #ccc",
+            }}
             value={formData.model}
             onChange={(e) =>
               setFormData({ ...formData, model: e.target.value })
@@ -100,78 +132,96 @@ const CarForm = () => {
           />
         </div>
 
-        <div>
-          <label style={{ display: "block", marginBottom: "5px" }}>
-            Cena (PLN):
-          </label>
-          <input
-            type="number"
-            required
-            style={{ width: "100%", padding: "8px" }}
-            value={formData.cena}
-            onChange={(e) =>
-              setFormData({ ...formData, cena: Number(e.target.value) })
-            }
-          />
+        <div style={{ display: "flex", gap: "20px" }}>
+          <div style={{ flex: 1 }}>
+            <label
+              style={{
+                fontWeight: "bold",
+                display: "block",
+                marginBottom: "5px",
+              }}
+            >
+              Cena (PLN):
+            </label>
+            <input
+              type="number"
+              required
+              style={{
+                width: "100%",
+                padding: "10px",
+                borderRadius: "4px",
+                border: "1px solid #ccc",
+              }}
+              value={formData.cena}
+              onChange={(e) =>
+                setFormData({ ...formData, cena: Number(e.target.value) })
+              }
+            />
+          </div>
+          <div style={{ flex: 1 }}>
+            <label
+              style={{
+                fontWeight: "bold",
+                display: "block",
+                marginBottom: "5px",
+              }}
+            >
+              Rok Produkcji:
+            </label>
+            <input
+              type="number"
+              required
+              style={{
+                width: "100%",
+                padding: "10px",
+                borderRadius: "4px",
+                border: "1px solid #ccc",
+              }}
+              value={formData.rokProdukcji}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  rokProdukcji: Number(e.target.value),
+                })
+              }
+            />
+          </div>
         </div>
 
-        <div>
-          <label style={{ display: "block", marginBottom: "5px" }}>
-            Rok Produkcji:
-          </label>
-          <input
-            type="number"
-            required
-            style={{ width: "100%", padding: "8px" }}
-            value={formData.rokProdukcji}
-            onChange={(e) =>
-              setFormData({ ...formData, rokProdukcji: Number(e.target.value) })
-            }
-          />
-        </div>
-
-        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "10px",
+            margin: "10px 0",
+          }}
+        >
           <input
             type="checkbox"
             id="dostepny"
+            style={{ width: "18px", height: "18px" }}
             checked={formData.dostepny}
             onChange={(e) =>
               setFormData({ ...formData, dostepny: e.target.checked })
             }
           />
-          <label htmlFor="dostepny">Pojazd dostępny w ofercie</label>
+          <label htmlFor="dostepny" style={{ cursor: "pointer" }}>
+            Pojazd dostępny w ofercie
+          </label>
         </div>
 
-        <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
-          <button
-            type="submit"
-            style={{
-              backgroundColor: "#007bff",
-              color: "white",
-              padding: "10px 20px",
-              border: "none",
-              borderRadius: "4px",
-              cursor: "pointer",
-              flex: 1,
-            }}
-          >
+        <div style={{ display: "flex", gap: "15px", marginTop: "20px" }}>
+          <UniversalButton type="submit" variant="primary">
             {isEditMode ? "Zapisz Zmiany" : "Dodaj do Systemu"}
-          </button>
+          </UniversalButton>
 
-          <button
+          <UniversalButton
             type="button"
+            variant="secondary"
             onClick={() => navigate("/manage")}
-            style={{
-              backgroundColor: "#6c757d",
-              color: "white",
-              padding: "10px 20px",
-              border: "none",
-              borderRadius: "4px",
-              cursor: "pointer",
-            }}
           >
             Anuluj
-          </button>
+          </UniversalButton>
         </div>
       </form>
     </div>
