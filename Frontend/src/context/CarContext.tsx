@@ -1,6 +1,12 @@
-import React, { createContext, useReducer, useContext } from "react";
+import React, {
+  createContext,
+  useReducer,
+  useContext,
+  useCallback,
+} from "react";
 import type { ReactNode } from "react";
 import type { Car, CarState, Action } from "../types";
+import { carService } from "../services/carService";
 
 const initialState: CarState = {
   cars: [],
@@ -29,13 +35,12 @@ const carReducer = (state: CarState, action: Action): CarState => {
       };
     case "TOGGLE_FAVORITE": {
       const exists = state.favorites.find((c) => c.id === action.payload.id);
-      let newFavs;
-      if (exists) {
-        newFavs = state.favorites.filter((c) => c.id !== action.payload.id);
-      } else {
-        newFavs = [...state.favorites, action.payload];
-      }
-      return { ...state, favorites: newFavs };
+      return {
+        ...state,
+        favorites: exists
+          ? state.favorites.filter((c) => c.id !== action.payload.id)
+          : [...state.favorites, action.payload],
+      };
     }
     case "SET_LOADING":
       return { ...state, loading: action.payload };
@@ -51,67 +56,55 @@ interface CarContextType {
   dispatch: React.Dispatch<Action>;
   getCars: () => Promise<void>;
   addCar: (car: Omit<Car, "id">) => Promise<void>;
-  updateCar: (id: number, car: Partial<Car>) => Promise<void>;
-  deleteCar: (id: number) => Promise<void>;
+  updateCar: (id: string, car: Partial<Car>) => Promise<void>;
+  deleteCar: (id: string) => Promise<void>;
 }
 
 const CarContext = createContext<CarContextType | undefined>(undefined);
 
 export const CarProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(carReducer, initialState);
-  const API_URL = "http://localhost:3000/api/cars";
 
-  const getCars = async () => {
+  const getCars = useCallback(async () => {
     dispatch({ type: "SET_LOADING", payload: true });
     try {
-      const res = await fetch(API_URL);
-      const data = await res.json();
-      dispatch({ type: "SET_CARS", payload: data });
+      const res = await carService.getAllCars();
+      dispatch({ type: "SET_CARS", payload: res.data });
     } catch (err) {
       dispatch({ type: "SET_ERROR", payload: "Błąd pobierania danych" });
     }
-  };
+  }, []);
 
-  const addCar = async (carData: Omit<Car, "id">) => {
+  const addCar = useCallback(async (carData: Omit<Car, "id">) => {
     try {
-      const res = await fetch(API_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(carData),
-      });
-      const newCar = await res.json();
-      dispatch({ type: "ADD_CAR", payload: newCar });
+      const res = await carService.addCar(carData);
+      dispatch({ type: "ADD_CAR", payload: res.data });
     } catch (err) {
       console.error("Błąd dodawania:", err);
     }
-  };
+  }, []);
 
-  const updateCar = async (id: number, carData: Partial<Car>) => {
+  const updateCar = useCallback(async (id: string, carData: Partial<Car>) => {
     try {
-      const res = await fetch(`${API_URL}/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(carData),
-      });
-      const updatedCar = await res.json();
-      dispatch({ type: "UPDATE_CAR", payload: updatedCar });
+      const res = await carService.updateCar(id, carData);
+      dispatch({ type: "UPDATE_CAR", payload: res.data });
     } catch (err) {
       console.error("Błąd edycji:", err);
     }
-  };
+  }, []);
 
-  const deleteCar = async (id: number) => {
+  const deleteCar = useCallback(async (id: string) => {
     try {
-      await fetch(`${API_URL}/${id}`, { method: "DELETE" });
+      await carService.deleteCar(id);
       dispatch({ type: "DELETE_CAR", payload: id });
     } catch (err) {
       console.error("Błąd usuwania:", err);
     }
-  };
+  }, []);
 
   return (
     <CarContext.Provider
-      value={{ state, dispatch, getCars, addCar, updateCar, deleteCar }}
+      value={{ state, getCars, addCar, updateCar, deleteCar, dispatch }}
     >
       {children}
     </CarContext.Provider>
@@ -120,8 +113,7 @@ export const CarProvider = ({ children }: { children: ReactNode }) => {
 
 export const useCarContext = () => {
   const context = useContext(CarContext);
-  if (!context) {
+  if (!context)
     throw new Error("useCarContext must be used within a CarProvider");
-  }
   return context;
 };

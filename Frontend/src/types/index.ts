@@ -10,7 +10,7 @@ export interface ServiceEntry {
 }
 
 export interface Car {
-  id: number;
+  id: string;
   marka: string;
   model: string;
   cena: number;
@@ -21,13 +21,13 @@ export interface Car {
 }
 
 export type Action =
-  | { type: 'SET_CARS'; payload: Car[] }
-  | { type: 'ADD_CAR'; payload: Car }
-  | { type: 'UPDATE_CAR'; payload: Car }
-  | { type: 'DELETE_CAR'; payload: number }
-  | { type: 'TOGGLE_FAVORITE'; payload: Car }
-  | { type: 'SET_LOADING'; payload: boolean }
-  | { type: 'SET_ERROR'; payload: string };
+  | { type: "SET_CARS"; payload: Car[] }
+  | { type: "ADD_CAR"; payload: Car }
+  | { type: "UPDATE_CAR"; payload: Car }
+  | { type: "DELETE_CAR"; payload: string }
+  | { type: "TOGGLE_FAVORITE"; payload: Car }
+  | { type: "SET_LOADING"; payload: boolean }
+  | { type: "SET_ERROR"; payload: string };
 
 export interface CarState {
   cars: Car[];

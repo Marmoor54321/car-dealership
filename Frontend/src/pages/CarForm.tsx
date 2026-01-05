@@ -9,7 +9,7 @@ const CarForm = () => {
 
   const isEditMode = Boolean(id);
 
-  const existingCar = state.cars.find((c) => c.id === Number(id));
+  const existingCar = state.cars.find((c) => c.id === id);
 
   const [formData, setFormData] = useState({
     marka: "",
@@ -35,7 +35,7 @@ const CarForm = () => {
     e.preventDefault();
 
     if (isEditMode && id) {
-      await updateCar(Number(id), formData);
+      await updateCar(id, formData);
     } else {
       await addCar(formData);
     }

@@ -1,32 +1,23 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { useCarContext } from "../../context/CarContext";
 import { CarCard } from "../carCard/CarCard";
 import { UniversalButton } from "../common/universalButton/UniversalButton";
 import "./InventoryContainer.css";
 import { PaginationControl } from "../paginationControl/PaginationControl";
 import { FilterPanel } from "../filterPanel/FilterPanel";
-export const InventoryContainer = () => {
-  const { state, dispatch } = useCarContext();
-  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
 
+export const InventoryContainer = () => {
+  const { state, getCars } = useCarContext();
+
+  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOption, setSortOption] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 3;
 
   useEffect(() => {
-    const fetchCars = async () => {
-      dispatch({ type: "SET_LOADING", payload: true });
-      try {
-        const response = await axios.get("http://localhost:3000/api/cars");
-        dispatch({ type: "SET_CARS", payload: response.data });
-      } catch (error) {
-        dispatch({ type: "SET_ERROR", payload: "Błąd pobierania danych" });
-      }
-    };
-    fetchCars();
-  }, [dispatch]);
+    getCars();
+  }, [getCars]);
 
   useEffect(() => {
     setCurrentPage(1);
@@ -80,9 +71,12 @@ export const InventoryContainer = () => {
         Ładowanie oferty...
       </div>
     );
+
   if (state.error)
     return (
-      <div style={{ color: "red", textAlign: "center" }}>{state.error}</div>
+      <div style={{ color: "red", textAlign: "center", padding: "20px" }}>
+        {state.error}
+      </div>
     );
 
   return (
