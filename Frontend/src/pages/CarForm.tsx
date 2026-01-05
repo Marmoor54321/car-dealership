@@ -1,23 +1,38 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useCarContext } from "../context/CarContext";
+import { UniversalButton } from "../components/common/universalButton/UniversalButton";
+import type { Car } from "../types";
 
 const CarForm = () => {
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { state, addCar, updateCar } = useCarContext();
+  const { state, addCar, updateCar, getCars } = useCarContext();
 
   const isEditMode = Boolean(id);
 
-  const existingCar = state.cars.find((c) => c.id === id);
+  const existingCar = state.cars.find((c) => String(c.id) === String(id));
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<Omit<Car, "id">>({
     marka: "",
     model: "",
     cena: 0,
     rokProdukcji: new Date().getFullYear(),
     dostepny: true,
+    daneTechniczne: {
+      silnik: "",
+      moc: 0,
+      spalanie: 0,
+    },
+    historiaSerwisowa: [],
   });
+
+  // KROK A: Jeśli odświeżysz stronę (F5) i stan jest pusty, pobierz auta z API
+  useEffect(() => {
+    if (isEditMode && state.cars.length === 0) {
+      getCars();
+    }
+  }, [isEditMode, state.cars.length, getCars]);
 
   useEffect(() => {
     if (isEditMode && existingCar) {
@@ -27,13 +42,18 @@ const CarForm = () => {
         cena: existingCar.cena,
         rokProdukcji: existingCar.rokProdukcji,
         dostepny: existingCar.dostepny,
+        daneTechniczne: existingCar.daneTechniczne
+          ? { ...existingCar.daneTechniczne }
+          : { silnik: "", moc: 0, spalanie: 0 },
+        historiaSerwisowa: existingCar.historiaSerwisowa
+          ? [...existingCar.historiaSerwisowa]
+          : [],
       });
     }
   }, [isEditMode, existingCar]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     if (isEditMode && id) {
       await updateCar(id, formData);
     } else {
