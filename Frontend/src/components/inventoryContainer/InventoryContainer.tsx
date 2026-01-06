@@ -5,10 +5,10 @@ import { UniversalButton } from "../common/universalButton/UniversalButton";
 import "./InventoryContainer.css";
 import { PaginationControl } from "../paginationControl/PaginationControl";
 import { FilterPanel } from "../filterPanel/FilterPanel";
+import { useNavigate } from "react-router-dom";
 
 export const InventoryContainer = () => {
   const { state, getCars } = useCarContext();
-
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOption, setSortOption] = useState("");
@@ -81,6 +81,13 @@ export const InventoryContainer = () => {
 
   return (
     <div className="inventory-container">
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-end",
+          marginBottom: "20px",
+        }}
+      ></div>
       <h2>Nasza Oferta</h2>
 
       <FilterPanel

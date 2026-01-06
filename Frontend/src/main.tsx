@@ -3,11 +3,14 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.tsx";
 import { CarProvider } from "./context/CarContext.tsx";
+import { AuthProvider } from "./context/AuthContext.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <CarProvider>
-      <App />
-    </CarProvider>
+    <AuthProvider>
+      <CarProvider>
+        <App />
+      </CarProvider>
+    </AuthProvider>
   </StrictMode>
 );

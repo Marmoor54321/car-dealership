@@ -35,3 +35,18 @@ export interface CarState {
   loading: boolean;
   error: string | null;
 }
+
+export type UserRole = "ADMIN" | "USER";
+
+export interface User {
+  id: string;
+  email: string;
+  role: UserRole;
+}
+
+export interface AuthContextType {
+  user: User | null;
+  isAdmin: boolean;
+  login: (role: UserRole) => void;
+  logout: () => void;
+}
