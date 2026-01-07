@@ -1,19 +1,16 @@
-// src/services/authService.ts
 import axios from "axios";
-import type { User, UserRole } from "../types";
+import type { LoginCredentials, RegisterData, User } from "../types";
 
 const API_URL = "http://localhost:3000/api/auth";
 
 export const authService = {
-  login: async (email: string, role: UserRole): Promise<User> => {
-    return {
-      id: "user_" + Math.random().toString(36).substr(2, 9),
-      email: email,
-      role: role,
-    };
+  login: async (credentials: LoginCredentials): Promise<User> => {
+    const response = await axios.post(`${API_URL}/login`, credentials);
+    return response.data;
   },
 
-  checkMe: async (): Promise<User | null> => {
-    return null;
+  register: async (data: RegisterData): Promise<User> => {
+    const response = await axios.post(`${API_URL}/register`, data);
+    return response.data;
   },
 };

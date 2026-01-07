@@ -1,5 +1,7 @@
 import express from "express";
 import cors from "cors";
+import bcrypt from "bcryptjs";
+
 const app = express();
 const PORT = 3000;
 
@@ -14,15 +16,8 @@ let cars = [
     cena: 45000,
     rokProdukcji: 2018,
     dostepny: true,
-    daneTechniczne: {
-      silnik: "1.8 Hybrid",
-      moc: 122,
-      spalanie: 5.2,
-    },
-    historiaSerwisowa: [
-      { opis: "Wymiana oleju", data: "2023-01-15" },
-      { opis: "Wymiana klocków hamulcowych", data: "2023-06-20" },
-    ],
+    daneTechniczne: { silnik: "1.8 Hybrid", moc: 122, spalanie: 5.2 },
+    historiaSerwisowa: [{ opis: "Wymiana oleju", data: "2023-01-15" }],
   },
   {
     id: 2,
@@ -31,11 +26,7 @@ let cars = [
     cena: 85000,
     rokProdukcji: 2020,
     dostepny: false,
-    daneTechniczne: {
-      silnik: "2.0 Diesel",
-      moc: 190,
-      spalanie: 6.5,
-    },
+    daneTechniczne: { silnik: "2.0 Diesel", moc: 190, spalanie: 6.5 },
     historiaSerwisowa: [{ opis: "Wymiana filtrów", data: "2024-02-10" }],
   },
   {
@@ -45,11 +36,7 @@ let cars = [
     cena: 32000,
     rokProdukcji: 2016,
     dostepny: true,
-    daneTechniczne: {
-      silnik: "1.5 EcoBoost",
-      moc: 150,
-      spalanie: 7.0,
-    },
+    daneTechniczne: { silnik: "1.5 EcoBoost", moc: 150, spalanie: 7.0 },
     historiaSerwisowa: [],
   },
   {
@@ -59,43 +46,79 @@ let cars = [
     cena: 60000,
     rokProdukcji: 2016,
     dostepny: true,
-    daneTechniczne: {
-      silnik: "1.8 Hybrid",
-      moc: 122,
-      spalanie: 5.2,
-    },
-    historiaSerwisowa: [
-      { opis: "Wymiana oleju", data: "2023-01-15" },
-      { opis: "Wymiana klocków hamulcowych", data: "2023-06-20" },
-    ],
+    daneTechniczne: { silnik: "1.4 Turbo", moc: 140, spalanie: 7.2 },
+    historiaSerwisowa: [{ opis: "Przegląd rejestracyjny", data: "2024-01-10" }],
   },
   {
     id: 5,
     marka: "Opel",
-    model: "Fury",
+    model: "Astra",
     cena: 11000,
     rokProdukcji: 2003,
-    dostepny: false,
-    daneTechniczne: {
-      silnik: "Benzyna 2.0",
-      moc: 110,
-      spalanie: 7.5,
-    },
-    historiaSerwisowa: [{ opis: "Wymiana filtrów", data: "2024-02-10" }],
+    dostepny: true,
+    daneTechniczne: { silnik: "1.6 Benzyna", moc: 105, spalanie: 7.5 },
+    historiaSerwisowa: [{ opis: "Wymiana rozrządu", data: "2022-05-12" }],
   },
   {
     id: 6,
     marka: "Mazda",
-    model: "Drive",
-    cena: 22000,
-    rokProdukcji: 2011,
-    dostepny: false,
+    model: "CX-5",
+    cena: 92000,
+    rokProdukcji: 2019,
+    dostepny: true,
+    daneTechniczne: { silnik: "2.5 SkyActiv-G", moc: 194, spalanie: 8.0 },
+    historiaSerwisowa: [],
+  },
+  {
+    id: 7,
+    marka: "Audi",
+    model: "A4",
+    cena: 115000,
+    rokProdukcji: 2021,
+    dostepny: true,
+    daneTechniczne: { silnik: "2.0 TFSI", moc: 204, spalanie: 6.8 },
+    historiaSerwisowa: [{ opis: "Serwis A1", data: "2025-01-02" }],
+  },
+  {
+    id: 8,
+    marka: "Mercedes",
+    model: "C200",
+    cena: 145000,
+    rokProdukcji: 2022,
+    dostepny: true,
     daneTechniczne: {
-      silnik: "1.5 EcoBoost",
-      moc: 150,
-      spalanie: 7.0,
+      silnik: "1.5 Turbo + Mild Hybrid",
+      moc: 204,
+      spalanie: 6.4,
     },
     historiaSerwisowa: [],
+  },
+  {
+    id: 9,
+    marka: "Volkswagen",
+    model: "Golf",
+    cena: 55000,
+    rokProdukcji: 2017,
+    dostepny: true,
+    daneTechniczne: { silnik: "1.4 TSI", moc: 150, spalanie: 5.8 },
+    historiaSerwisowa: [{ opis: "Wymiana akumulatora", data: "2024-11-20" }],
+  },
+];
+
+let users = [
+  {
+    id: "101",
+    username: "admin",
+    email: "admin@gmail.com",
+    password: bcrypt.hashSync("admin123", 10),
+    role: "ADMIN",
+  },
+  {
+    id: "102",
+    username: "user",
+    email: "user@gmail.com",
+    password: bcrypt.hashSync("user123", 10),
+    role: "USER",
   },
 ];
 
@@ -104,29 +127,20 @@ const getNextId = () => {
   return maxId + 1;
 };
 
-app.get("/api/cars", (req, res) => {
-  res.json(cars);
-});
+app.get("/api/cars", (req, res) => res.json(cars));
 
 app.get("/api/cars/:id", (req, res) => {
   const id = parseInt(req.params.id);
   const car = cars.find((c) => c.id === id);
-
-  if (!car) {
-    return res.status(404).json({ message: "Auto nie znalezione" });
-  }
-  res.json(car);
+  car
+    ? res.json(car)
+    : res.status(404).json({ message: "Auto nie znalezione" });
 });
 
 app.post("/api/cars", (req, res) => {
-  const newCar = {
-    id: getNextId(),
-    ...req.body,
-  };
-
+  const newCar = { id: getNextId(), ...req.body };
   if (!newCar.historiaSerwisowa) newCar.historiaSerwisowa = [];
   if (!newCar.daneTechniczne) newCar.daneTechniczne = {};
-
   cars.push(newCar);
   res.status(201).json(newCar);
 });
@@ -134,27 +148,73 @@ app.post("/api/cars", (req, res) => {
 app.put("/api/cars/:id", (req, res) => {
   const id = parseInt(req.params.id);
   const index = cars.findIndex((c) => c.id === id);
-
-  if (index === -1) {
+  if (index === -1)
     return res.status(404).json({ message: "Auto nie znalezione" });
-  }
-
   cars[index] = { ...cars[index], ...req.body };
   res.json(cars[index]);
 });
 
 app.delete("/api/cars/:id", (req, res) => {
   const id = parseInt(req.params.id);
-  const initialLength = cars.length;
   cars = cars.filter((c) => c.id !== id);
-
-  if (cars.length === initialLength) {
-    return res.status(404).json({ message: "Auto nie znalezione" });
-  }
-
   res.json({ message: "Auto usunięte poprawnie", id: id });
 });
 
+app.post("/api/auth/register", async (req, res) => {
+  try {
+    const { username, email, password } = req.body;
+
+    if (users.find((u) => u.email === email)) {
+      return res
+        .status(400)
+        .json({ message: "Użytkownik o tym adresie już istnieje." });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const newUser = {
+      id: Date.now().toString(),
+      username,
+      email,
+      password: hashedPassword,
+      role: "USER",
+    };
+
+    users.push(newUser);
+    console.log(`Zarejestrowano nowego użytkownika: ${email}`);
+
+    const { password: _, ...userWithoutPassword } = newUser;
+    res.status(201).json(userWithoutPassword);
+  } catch (error) {
+    res.status(500).json({ message: "Błąd podczas rejestracji." });
+  }
+});
+
+app.post("/api/auth/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    const user = users.find((u) => u.email === email);
+    if (!user) {
+      return res
+        .status(400)
+        .json({ message: "Nieprawidłowy email lub hasło." });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res
+        .status(400)
+        .json({ message: "Nieprawidłowy email lub hasło." });
+    }
+
+    const { password: _, ...userWithoutPassword } = user;
+    res.json(userWithoutPassword);
+  } catch (error) {
+    res.status(500).json({ message: "Błąd podczas logowania." });
+  }
+});
+
 app.listen(PORT, () => {
-  console.log(`Serwer backendu działa na porcie http://localhost:${PORT}`);
+  console.log(`Serwer backendu działa na http://localhost:${PORT}`);
 });

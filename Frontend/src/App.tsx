@@ -6,11 +6,13 @@ import CarDetails from "./pages/CarDetails";
 import CarForm from "./pages/CarForm";
 import NotFound from "./pages/NotFound";
 import CarManagement from "./pages/CarManagement";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 import { RoleGuard } from "./components/common/roleGuard/RoleGuard";
 import { ProtectedRoute } from "./components/common/protectedRoute/ProtectedRoute";
 
 function App() {
-  const { user, login, logout } = useAuth();
+  const { user, logout } = useAuth();
 
   return (
     <BrowserRouter>
@@ -72,33 +74,27 @@ function App() {
               </button>
             </>
           ) : (
-            <div style={{ display: "flex", gap: "10px" }}>
-              <button
-                onClick={() => login("USER")}
+            <div style={{ display: "flex", gap: "15px" }}>
+              <Link
+                to="/login"
                 style={{
-                  padding: "5px 10px",
-                  cursor: "pointer",
-                  borderRadius: "4px",
-                  border: "1px solid #007bff",
+                  textDecoration: "none",
                   color: "#007bff",
-                  background: "none",
+                  fontWeight: "500",
                 }}
               >
-                Test: Zaloguj User
-              </button>
-              <button
-                onClick={() => login("ADMIN")}
+                Zaloguj się
+              </Link>
+              <Link
+                to="/register"
                 style={{
-                  padding: "5px 10px",
-                  cursor: "pointer",
-                  borderRadius: "4px",
-                  border: "1px solid #ffc107",
-                  color: "#856404",
-                  background: "none",
+                  textDecoration: "none",
+                  color: "#28a745",
+                  fontWeight: "500",
                 }}
               >
-                Test: Zaloguj Admin
-              </button>
+                Rejestracja
+              </Link>
             </div>
           )}
         </div>
@@ -106,6 +102,9 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Home />} />
+
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
 
         <Route
           path="/manage"

@@ -44,9 +44,20 @@ export interface User {
   role: UserRole;
 }
 
+export interface LoginCredentials {
+  email: string;
+  password?: string;
+}
+
+export interface RegisterData extends LoginCredentials {
+  username: string;
+  role: UserRole;
+}
+
 export interface AuthContextType {
   user: User | null;
   isAdmin: boolean;
-  login: (role: UserRole) => void;
+  login: (credentials: LoginCredentials) => Promise<void>;
+  register: (data: RegisterData) => Promise<void>;
   logout: () => void;
 }

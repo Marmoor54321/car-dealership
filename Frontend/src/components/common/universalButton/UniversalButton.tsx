@@ -7,6 +7,7 @@ interface UniversalButtonProps {
   variant?: "primary" | "secondary" | "danger";
   type?: "button" | "submit" | "reset";
   className?: string;
+  style?: React.CSSProperties;
 }
 
 export const UniversalButton = ({
