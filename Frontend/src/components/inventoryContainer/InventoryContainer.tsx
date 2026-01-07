@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 export const InventoryContainer = () => {
   const { state, getCars } = useCarContext();
+  const navigate = useNavigate();
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOption, setSortOption] = useState("");

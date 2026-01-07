@@ -4,13 +4,19 @@ import { useCarContext } from "../context/CarContext";
 import { UniversalButton } from "../components/common/universalButton/UniversalButton";
 import type { Car } from "../types";
 
+interface FormErrors {
+  marka?: string;
+  model?: string;
+  cena?: string;
+  rokProdukcji?: string;
+}
+
 const CarForm = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { state, addCar, updateCar, getCars } = useCarContext();
 
   const isEditMode = Boolean(id);
-
   const existingCar = state.cars.find((c) => String(c.id) === String(id));
 
   const [formData, setFormData] = useState<Omit<Car, "id">>({
@@ -26,6 +32,8 @@ const CarForm = () => {
     },
     historiaSerwisowa: [],
   });
+
+  const [errors, setErrors] = useState<FormErrors>({});
 
   useEffect(() => {
     if (isEditMode && state.cars.length === 0) {
@@ -51,14 +59,56 @@ const CarForm = () => {
     }
   }, [isEditMode, existingCar]);
 
+  const validate = (): boolean => {
+    const newErrors: FormErrors = {};
+    const currentYear = new Date().getFullYear();
+
+    if (!formData.marka.trim() || formData.marka.length < 1) {
+      newErrors.marka = "Nazwa marki nie może być pusta.";
+    }
+    if (!formData.model.trim() || formData.model.length < 1) {
+      newErrors.model = "Nazwa modelu nie może być pusta.";
+    }
+    if (formData.cena <= 0) {
+      newErrors.cena = "Cena musi być większa od 0 PLN.";
+    }
+    if (formData.rokProdukcji > currentYear) {
+      newErrors.rokProdukcji = `Rok produkcji nie może być późniejszy niż ${currentYear}.`;
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!validate()) {
+      return;
+    }
+
     if (isEditMode && id) {
       await updateCar(id, formData);
     } else {
       await addCar(formData);
     }
     navigate("/manage");
+  };
+
+  const getInputStyle = (hasError: boolean) => ({
+    width: "100%",
+    padding: "10px",
+    borderRadius: "4px",
+    border: hasError ? "2px solid #dc3545" : "1px solid #ccc",
+    outline: "none",
+    transition: "border-color 0.2s",
+  });
+
+  const errorTextStyle = {
+    color: "#dc3545",
+    fontSize: "0.85rem",
+    marginTop: "4px",
+    display: "block",
   };
 
   return (
@@ -92,18 +142,13 @@ const CarForm = () => {
           </label>
           <input
             type="text"
-            required
-            style={{
-              width: "100%",
-              padding: "10px",
-              borderRadius: "4px",
-              border: "1px solid #ccc",
-            }}
+            style={getInputStyle(!!errors.marka)}
             value={formData.marka}
             onChange={(e) =>
               setFormData({ ...formData, marka: e.target.value })
             }
           />
+          {errors.marka && <span style={errorTextStyle}>{errors.marka}</span>}
         </div>
 
         <div className="form-group">
@@ -118,18 +163,13 @@ const CarForm = () => {
           </label>
           <input
             type="text"
-            required
-            style={{
-              width: "100%",
-              padding: "10px",
-              borderRadius: "4px",
-              border: "1px solid #ccc",
-            }}
+            style={getInputStyle(!!errors.model)}
             value={formData.model}
             onChange={(e) =>
               setFormData({ ...formData, model: e.target.value })
             }
           />
+          {errors.model && <span style={errorTextStyle}>{errors.model}</span>}
         </div>
 
         <div style={{ display: "flex", gap: "20px" }}>
@@ -145,18 +185,13 @@ const CarForm = () => {
             </label>
             <input
               type="number"
-              required
-              style={{
-                width: "100%",
-                padding: "10px",
-                borderRadius: "4px",
-                border: "1px solid #ccc",
-              }}
+              style={getInputStyle(!!errors.cena)}
               value={formData.cena}
               onChange={(e) =>
                 setFormData({ ...formData, cena: Number(e.target.value) })
               }
             />
+            {errors.cena && <span style={errorTextStyle}>{errors.cena}</span>}
           </div>
           <div style={{ flex: 1 }}>
             <label
@@ -170,13 +205,7 @@ const CarForm = () => {
             </label>
             <input
               type="number"
-              required
-              style={{
-                width: "100%",
-                padding: "10px",
-                borderRadius: "4px",
-                border: "1px solid #ccc",
-              }}
+              style={getInputStyle(!!errors.rokProdukcji)}
               value={formData.rokProdukcji}
               onChange={(e) =>
                 setFormData({
@@ -185,6 +214,9 @@ const CarForm = () => {
                 })
               }
             />
+            {errors.rokProdukcji && (
+              <span style={errorTextStyle}>{errors.rokProdukcji}</span>
+            )}
           </div>
         </div>
 
