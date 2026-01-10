@@ -27,7 +27,7 @@
 .nav-links {
   list-style: none;
   display: flex;
-  gap: 25px;
+  gap: 30px;
   align-items: center;
   margin: 0;
   padding: 0;
@@ -42,6 +42,40 @@
 
 .nav-link:hover {
   color: #007bff;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.user-email {
+  color: #666;
+  font-size: 0.9rem;
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+.login-link-btn {
+  text-decoration: none;
+  background-color: #007bff;
+  color: white;
+  padding: 8px 20px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  display: inline-block;
+}
+
+.login-link-btn:hover {
+  background-color: #0056b3;
+  color: white;
+}
+
+.login-link-btn:active {
+  transform: translateY(0);
 }
 
 .logout-button {

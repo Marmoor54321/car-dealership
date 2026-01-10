@@ -19,6 +19,7 @@ let cars = [
     dostepny: true,
     daneTechniczne: { silnik: "1.8 Hybrid", moc: 122, spalanie: 5.2 },
     historiaSerwisowa: [{ opis: "Wymiana oleju", data: "2023-01-15" }],
+    opis: "Niezawodny i ekonomiczny sedan z napędem hybrydowym. Auto jest w bardzo dobrym stanie technicznym, z pełną historią serwisową. Idealne dla osób szukających oszczędnego i komfortowego pojazdu do codziennej jazdy.",
   },
   {
     id: 2,
@@ -30,6 +31,7 @@ let cars = [
     dostepny: false,
     daneTechniczne: { silnik: "2.0 Diesel", moc: 190, spalanie: 6.5 },
     historiaSerwisowa: [{ opis: "Wymiana filtrów", data: "2024-02-10" }],
+    opis: "Luksusowy sedan z dynamicznym silnikiem diesla. Auto jest w doskonałym stanie technicznym, z pełną historią serwisową. Idealne dla osób ceniących komfort i sportowe osiągi.",
   },
   {
     id: 3,
@@ -41,6 +43,7 @@ let cars = [
     dostepny: true,
     daneTechniczne: { silnik: "1.5 EcoBoost", moc: 150, spalanie: 7.0 },
     historiaSerwisowa: [],
+    opis: "Przestronny i ekonomiczny hatchback, idealny do codziennej jazdy. Auto jest w dobrym stanie technicznym, z regularnie serwisowaną historią. Doskonały wybór dla osób szukających niezawodnego pojazdu w przystępnej cenie.",
   },
   {
     id: 4,
@@ -52,6 +55,7 @@ let cars = [
     dostepny: true,
     daneTechniczne: { silnik: "1.4 Turbo", moc: 140, spalanie: 7.2 },
     historiaSerwisowa: [{ opis: "Przegląd rejestracyjny", data: "2024-01-10" }],
+    opis: "Kompaktowy SUV z dynamicznym silnikiem turbo. Auto jest w bardzo dobrym stanie technicznym, z pełną historią serwisową. Idealne dla osób szukających wszechstronnego pojazdu do miasta i na dłuższe trasy.",
   },
   {
     id: 5,
@@ -63,6 +67,7 @@ let cars = [
     dostepny: true,
     daneTechniczne: { silnik: "1.6 Benzyna", moc: 105, spalanie: 7.5 },
     historiaSerwisowa: [{ opis: "Wymiana rozrządu", data: "2022-05-12" }],
+    opis: "Używane auto w dobrym stanie technicznym. Regularnie serwisowane, z wymienionym rozrządem. Idealne dla osób szukających ekonomicznego i niezawodnego pojazdu do codziennej jazdy.",
   },
   {
     id: 6,
@@ -74,6 +79,7 @@ let cars = [
     dostepny: true,
     daneTechniczne: { silnik: "2.5 SkyActiv-G", moc: 194, spalanie: 8.0 },
     historiaSerwisowa: [],
+    opis: "Przestronny SUV z dynamicznym silnikiem i nowoczesnymi technologiami. Auto jest w doskonałym stanie, z pełną historią serwisową. Idealne dla rodzin oraz osób ceniących komfort i bezpieczeństwo podczas jazdy.",
   },
   {
     id: 7,
@@ -88,6 +94,7 @@ let cars = [
       { opis: "Serwis A1", data: "2025-01-02" },
       { opis: "Wymiana opon", data: "2024-10-15" },
     ],
+    opis: "Luksusowy sedan z zaawansowanymi technologiami i dynamicznym silnikiem. Auto jest w doskonałym stanie technicznym, z pełną historią serwisową. Idealne dla osób ceniących komfort, styl i sportowe osiągi.",
   },
   {
     id: 8,
@@ -103,6 +110,7 @@ let cars = [
       spalanie: 6.4,
     },
     historiaSerwisowa: [],
+    opis: "Ekskluzywny sedan z nowoczesnym napędem mild hybrid i zaawansowanymi technologiami. Auto jest w doskonałym stanie technicznym, z pełną historią serwisową. Idealne dla osób ceniących luksus, komfort i innowacje w motoryzacji.",
   },
   {
     id: 9,
@@ -114,6 +122,7 @@ let cars = [
     dostepny: true,
     daneTechniczne: { silnik: "1.4 TSI", moc: 150, spalanie: 5.8 },
     historiaSerwisowa: [{ opis: "Wymiana akumulatora", data: "2024-11-20" }],
+    opis: "Popularny hatchback z dynamicznym silnikiem i nowoczesnymi technologiami. Auto jest w bardzo dobrym stanie technicznym, z pełną historią serwisową. Idealne dla osób szukających niezawodnego i wszechstronnego pojazdu do codziennej jazdy.",
   },
 ];
 

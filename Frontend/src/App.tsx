@@ -3,7 +3,7 @@ import PageHeader from "./components/common/pageHeader/PageHeader";
 import Footer from "./components/common/footer/Footer";
 import Home from "./pages/Home";
 import CarDetails from "./pages/carDetails/CarDetails";
-import CarForm from "./pages/CarForm";
+import CarForm from "./pages/carForm/CarForm";
 import NotFound from "./pages/NotFound";
 import CarManagement from "./pages/CarManagement";
 import Login from "./pages/Login";
