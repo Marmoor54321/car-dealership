@@ -1,17 +1,17 @@
 import "./StatusBadge.css";
 
 interface StatusBadgeProps {
-  isAvailable: boolean;
+  dostepny: boolean;
 }
 
-export const StatusBadge = ({ isAvailable }: StatusBadgeProps) => {
+export const StatusBadge = ({ dostepny }: StatusBadgeProps) => {
   return (
     <span
       className={`status-badge ${
-        isAvailable ? "status-available" : "status-sold"
+        dostepny ? "status-available" : "status-sold"
       }`}
     >
-      {isAvailable ? "Dostępny" : "Sprzedany"}
+      {dostepny ? "Dostępny" : "Sprzedany"}
     </span>
   );
 };

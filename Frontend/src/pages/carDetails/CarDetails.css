@@ -1,0 +1,54 @@
+.car-details-page {
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 20px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.details-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.details-price {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #2c3e50;
+  margin: 10px 0;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  margin-top: 30px;
+  border-top: 1px solid #eee;
+  padding-top: 30px;
+}
+
+.specs-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.specs-section li {
+  padding: 10px 0;
+  border-bottom: 1px solid #f9f9f9;
+}
+
+.history-item {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  border-left: 4px solid #3498db;
+}
+
+.history-date {
+  font-weight: bold;
+  font-size: 0.85rem;
+  color: #7f8c8d;
+}

@@ -14,6 +14,7 @@ export interface Car {
   marka: string;
   model: string;
   cena: number;
+  przebieg: number;
   rokProdukcji: number;
   dostepny: boolean;
   daneTechniczne: TechnicalData;
