@@ -23,8 +23,8 @@ const PageHeader: React.FC = () => {
         <ul className="nav-links">
           {user?.role === "USER" && (
             <li>
-              <Link to="/" className="nav-link fav-link">
-                Ulubione <span className="fav-badge">{favoritesCount}</span>
+              <Link to="/favorites" className="favorites-nav">
+                ❤️ Ulubione ({state.favorites.length})
               </Link>
             </li>
           )}

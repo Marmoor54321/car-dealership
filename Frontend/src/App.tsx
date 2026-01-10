@@ -10,6 +10,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import { ProtectedRoute } from "./components/common/protectedRoute/ProtectedRoute";
 import "./App.css";
+import { Favorites } from "./pages/favorites/Favorites";
 
 function App() {
   return (
@@ -21,6 +22,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+
+          <Route path="/favorites" element={<Favorites />} />
 
           <Route
             path="/manage"
