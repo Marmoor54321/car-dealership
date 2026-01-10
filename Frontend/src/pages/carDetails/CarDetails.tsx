@@ -51,10 +51,17 @@ const CarDetails: React.FC = () => {
           <div className="details-meta">
             <span>Rocznik: {car.rokProdukcji}</span>
             <br />
-            <span>Przebieg: {car.przebieg} km</span>
+            <span>Przebieg: {car.przebieg.toLocaleString()} km</span>
           </div>
         </div>
       </div>
+
+      <section className="description-section">
+        <h3>Opis pojazdu</h3>
+        <div className="car-description-text">
+          {car.opis || "Brak opisu dla tego pojazdu."}
+        </div>
+      </section>
 
       <div className="details-grid">
         <section className="specs-section">
@@ -71,6 +78,7 @@ const CarDetails: React.FC = () => {
             </li>
           </ul>
         </section>
+
         <section className="history-section">
           <h3>Historia serwisowa</h3>
           {car.historiaSerwisowa.length > 0 ? (
