@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import type { Car } from "../../types";
 import { StatusBadge } from "../common/statusBadge/StatusBadge";
 import { UniversalButton } from "../common/universalButton/UniversalButton";
+import { useCarContext } from "../../context/CarContext";
 import "./CarCard.css";
 
 interface CarCardProps {
@@ -9,8 +10,23 @@ interface CarCardProps {
 }
 
 export const CarCard = ({ car }: CarCardProps) => {
+  const { state, dispatch } = useCarContext();
+
+  const isFavorite = state.favorites.includes(car.id);
+  const handleToggleFavorite = () => {
+    dispatch({ type: "TOGGLE_FAVORITE", payload: car.id });
+  };
+
   return (
     <div className="car-card">
+      <button
+        className={`favorite-btn ${isFavorite ? "active" : ""}`}
+        onClick={handleToggleFavorite}
+        aria-label="Dodaj do ulubionych"
+      >
+        {isFavorite ? "❤️" : "🤍"}
+      </button>
+
       <div className="car-image-placeholder">
         <img
           src={`https://placehold.co/600x400?text=${car.marka}+${car.model}`}
@@ -22,7 +38,7 @@ export const CarCard = ({ car }: CarCardProps) => {
           <h3>
             {car.marka} {car.model}
           </h3>
-          <StatusBadge isAvailable={car.dostepny} />
+          <StatusBadge dostepny={car.dostepny} />
         </div>
         <p className="car-year">Rocznik: {car.rokProdukcji}</p>
         <p className="car-price">{car.cena.toLocaleString()} PLN</p>

@@ -84,7 +84,10 @@ let cars = [
     rokProdukcji: 2021,
     dostepny: true,
     daneTechniczne: { silnik: "2.0 TFSI", moc: 204, spalanie: 6.8 },
-    historiaSerwisowa: [{ opis: "Serwis A1", data: "2025-01-02" }],
+    historiaSerwisowa: [
+      { opis: "Serwis A1", data: "2025-01-02" },
+      { opis: "Wymiana opon", data: "2024-10-15" },
+    ],
   },
   {
     id: 8,

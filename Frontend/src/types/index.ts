@@ -16,6 +16,7 @@ export interface Car {
   cena: number;
   przebieg: number;
   rokProdukcji: number;
+  opis: string;
   dostepny: boolean;
   daneTechniczne: TechnicalData;
   historiaSerwisowa: ServiceEntry[];
@@ -26,13 +27,13 @@ export type Action =
   | { type: "ADD_CAR"; payload: Car }
   | { type: "UPDATE_CAR"; payload: Car }
   | { type: "DELETE_CAR"; payload: string }
-  | { type: "TOGGLE_FAVORITE"; payload: Car }
+  | { type: "TOGGLE_FAVORITE"; payload: string }
   | { type: "SET_LOADING"; payload: boolean }
-  | { type: "SET_ERROR"; payload: string };
+  | { type: "SET_ERROR"; payload: string | null };
 
 export interface CarState {
   cars: Car[];
-  favorites: Car[];
+  favorites: string[];
   loading: boolean;
   error: string | null;
 }

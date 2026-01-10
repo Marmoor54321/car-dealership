@@ -34,13 +34,14 @@ const carReducer = (state: CarState, action: Action): CarState => {
         cars: state.cars.filter((car) => car.id !== action.payload),
       };
     case "TOGGLE_FAVORITE": {
-      const exists = state.favorites.find((c) => c.id === action.payload.id);
-      return {
-        ...state,
-        favorites: exists
-          ? state.favorites.filter((c) => c.id !== action.payload.id)
-          : [...state.favorites, action.payload],
-      };
+      const carId = action.payload;
+      const isFavorite = state.favorites.includes(carId);
+
+      const newFavorites = isFavorite
+        ? state.favorites.filter((id) => id !== carId)
+        : [...state.favorites, carId];
+
+      return { ...state, favorites: newFavorites };
     }
     case "SET_LOADING":
       return { ...state, loading: action.payload };
@@ -70,8 +71,8 @@ export const CarProvider = ({ children }: { children: ReactNode }) => {
     try {
       const res = await carService.getAllCars();
       dispatch({ type: "SET_CARS", payload: res.data });
-    } catch (err) {
-      dispatch({ type: "SET_ERROR", payload: "Błąd pobierania danych" });
+    } catch {
+      dispatch({ type: "SET_ERROR", payload: "Błąd ładowania samochodów." });
     }
   }, []);
 

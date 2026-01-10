@@ -9,6 +9,9 @@ interface FormErrors {
   model?: string;
   cena?: string;
   rokProdukcji?: string;
+  przebieg?: string;
+  opis?: string;
+  tech?: string;
 }
 
 const CarForm = () => {
@@ -23,7 +26,9 @@ const CarForm = () => {
     marka: "",
     model: "",
     cena: 0,
+    przebieg: 0,
     rokProdukcji: new Date().getFullYear(),
+    opis: "",
     dostepny: true,
     daneTechniczne: {
       silnik: "",
@@ -49,6 +54,8 @@ const CarForm = () => {
         cena: existingCar.cena,
         rokProdukcji: existingCar.rokProdukcji,
         dostepny: existingCar.dostepny,
+        przebieg: existingCar.przebieg || 0,
+        opis: existingCar.opis || "",
         daneTechniczne: existingCar.daneTechniczne
           ? { ...existingCar.daneTechniczne }
           : { silnik: "", moc: 0, spalanie: 0 },
@@ -63,17 +70,26 @@ const CarForm = () => {
     const newErrors: FormErrors = {};
     const currentYear = new Date().getFullYear();
 
-    if (!formData.marka.trim() || formData.marka.length < 1) {
-      newErrors.marka = "Nazwa marki nie może być pusta.";
-    }
-    if (!formData.model.trim() || formData.model.length < 1) {
-      newErrors.model = "Nazwa modelu nie może być pusta.";
-    }
-    if (formData.cena <= 0) {
-      newErrors.cena = "Cena musi być większa od 0 PLN.";
-    }
+    if (!formData.marka.trim()) newErrors.marka = "Marka jest wymagana.";
+    if (!formData.model.trim()) newErrors.model = "Model jest wymagany.";
+
+    if (formData.cena <= 0) newErrors.cena = "Cena musi być większa od 0.";
+    if (formData.przebieg <= 0)
+      newErrors.przebieg = "Przebieg musi być większy od 0.";
+
     if (formData.rokProdukcji > currentYear) {
-      newErrors.rokProdukcji = `Rok produkcji nie może być późniejszy niż ${currentYear}.`;
+      newErrors.rokProdukcji = `Rok nie może być późniejszy niż ${currentYear}.`;
+    }
+
+    if (formData.opis.trim().length < 20) {
+      newErrors.opis = "Opis musi zawierać co najmniej 20 znaków.";
+    }
+
+    const { silnik, moc, spalanie } = formData.daneTechniczne;
+    const isTechValid = silnik.trim() !== "" || moc > 0 || spalanie > 0;
+
+    if (!isTechValid) {
+      newErrors.tech = "Wymagany jest przynajmniej jeden parametr techniczny.";
     }
 
     setErrors(newErrors);
