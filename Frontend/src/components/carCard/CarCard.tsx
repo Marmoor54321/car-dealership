@@ -3,6 +3,7 @@ import type { Car } from "../../types";
 import { StatusBadge } from "../common/statusBadge/StatusBadge";
 import { UniversalButton } from "../common/universalButton/UniversalButton";
 import { useCarContext } from "../../context/CarContext";
+import { useAuth } from "../../context/AuthContext";
 import "./CarCard.css";
 
 interface CarCardProps {
@@ -11,21 +12,24 @@ interface CarCardProps {
 
 export const CarCard = ({ car }: CarCardProps) => {
   const { state, dispatch } = useCarContext();
+  const { user } = useAuth();
 
   const isFavorite = state.favorites.includes(car.id);
+  const canSeeFavorites = user && user.role === "USER";
   const handleToggleFavorite = () => {
     dispatch({ type: "TOGGLE_FAVORITE", payload: car.id });
   };
 
   return (
     <div className="car-card">
-      <button
-        className={`favorite-btn ${isFavorite ? "active" : ""}`}
-        onClick={handleToggleFavorite}
-        aria-label="Dodaj do ulubionych"
-      >
-        {isFavorite ? "❤️" : "🤍"}
-      </button>
+      {canSeeFavorites && (
+        <button
+          className={`favorite-btn ${isFavorite ? "active" : ""}`}
+          onClick={handleToggleFavorite}
+        >
+          {isFavorite ? "❤️" : "🤍"}
+        </button>
+      )}
 
       <div className="car-image-placeholder">
         <img
