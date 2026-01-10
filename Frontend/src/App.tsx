@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import PageHeader from "./components/common/pageHeader/PageHeader";
+import Footer from "./components/common/footer/Footer";
 import Home from "./pages/Home";
 import CarDetails from "./pages/CarDetails";
 import CarForm from "./pages/CarForm";
@@ -8,6 +9,7 @@ import CarManagement from "./pages/CarManagement";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import { ProtectedRoute } from "./components/common/protectedRoute/ProtectedRoute";
+import "./App.css";
 
 function App() {
   return (
@@ -51,6 +53,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
+      <Footer />
     </BrowserRouter>
   );
 }
