@@ -60,12 +60,13 @@ const Login = () => {
       navigate("/");
     } catch (err: unknown) {
       if (isAxiosError(err)) {
-        setErrors({
-          server:
-            err.response?.data?.message || "Nieprawidłowy e-mail lub hasło",
-        });
+        if (err.response) {
+          setErrors({ server: "Podaj poprawny email i haslo." });
+        } else {
+          setErrors({ server: "Błąd połączenia z serwerem. Spróbuj później." });
+        }
       } else {
-        setErrors({ server: "Wystąpił nieoczekiwany błąd połączenia" });
+        setErrors({ server: "Podaj poprawny email i haslo." });
       }
     }
   };
