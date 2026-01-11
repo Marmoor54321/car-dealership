@@ -53,23 +53,29 @@ const CarDetails: React.FC = () => {
 
   return (
     <div className="car-details-page">
-      <div className="details-header">
+      {/* Pasek górny z nawigacją i statusem */}
+      <div className="details-top-bar">
         <UniversalButton onClick={() => navigate(-1)} variant="secondary">
           ← Powrót
         </UniversalButton>
         <StatusBadge dostepny={car.dostepny} />
       </div>
 
-      <div className="details-main">
-        <div className="details-info">
+      {/* SEKCJA GŁÓWNA (Hero): Informacje + Zdjęcie */}
+      <div className="details-hero">
+        <div className="details-info-side">
           <h1>
             {car.marka} {car.model}
           </h1>
           <p className="details-price">{car.cena.toLocaleString()} PLN</p>
+
           <div className="details-meta">
-            <span>Rocznik: {car.rokProdukcji}</span>
-            <br />
-            <span>Przebieg: {car.przebieg.toLocaleString()} km</span>
+            <div className="meta-item">
+              <strong>Rocznik:</strong> {car.rokProdukcji}
+            </div>
+            <div className="meta-item">
+              <strong>Przebieg:</strong> {car.przebieg.toLocaleString()} km
+            </div>
           </div>
 
           <div className="offer-actions-container">
@@ -100,6 +106,14 @@ const CarDetails: React.FC = () => {
               </>
             )}
           </div>
+        </div>
+
+        <div className="details-image-side">
+          <img
+            src={car.image}
+            alt={`${car.marka} ${car.model}`}
+            className="main-car-image"
+          />
         </div>
       </div>
 

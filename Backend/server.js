@@ -18,10 +18,10 @@ let cars = [
     rokProdukcji: 2018,
     dostepny: true,
     image:
-      "https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?q=80&w=800", // Dodano zdjęcie
+      "https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?q=80&w=800",
     daneTechniczne: { silnik: "1.8 Hybrid", moc: 122, spalanie: 5.2 },
     historiaSerwisowa: [{ opis: "Wymiana oleju", data: "2023-01-15" }],
-    opis: "Niezawodny i ekonomiczny sedan z napędem hybrydowym...",
+    opis: "Niezawodny i ekonomiczny sedan z napędem hybrydowym.",
   },
   {
     id: 2,
@@ -32,10 +32,10 @@ let cars = [
     rokProdukcji: 2020,
     dostepny: false,
     image:
-      "https://images.unsplash.com/photo-1555215695-3004980ad54e?q=80&w=800", // Dodano zdjęcie
+      "https://images.unsplash.com/photo-1555215695-3004980ad54e?q=80&w=800",
     daneTechniczne: { silnik: "2.0 Diesel", moc: 190, spalanie: 6.5 },
     historiaSerwisowa: [{ opis: "Wymiana filtrów", data: "2024-02-10" }],
-    opis: "Luksusowy sedan z dynamicznym silnikiem diesla...",
+    opis: "Luksusowy sedan z dynamicznym silnikiem diesla.",
   },
   {
     id: 3,
@@ -46,10 +46,10 @@ let cars = [
     rokProdukcji: 2016,
     dostepny: true,
     image:
-      "https://images.unsplash.com/photo-1529369623266-f5264b696110?q=80&w=800", // Dodano zdjęcie
+      "https://images.unsplash.com/photo-1529369623266-f5264b696110?q=80&w=800",
     daneTechniczne: { silnik: "1.5 EcoBoost", moc: 150, spalanie: 7.0 },
     historiaSerwisowa: [],
-    opis: "Przestronny i ekonomiczny hatchback...",
+    opis: "Przestronny i ekonomiczny hatchback.",
   },
   {
     id: 4,
@@ -63,7 +63,7 @@ let cars = [
       "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?q=80&w=800",
     daneTechniczne: { silnik: "1.4 Turbo", moc: 140, spalanie: 7.2 },
     historiaSerwisowa: [{ opis: "Przegląd rejestracyjny", data: "2024-01-10" }],
-    opis: "Kompaktowy SUV z dynamicznym silnikiem turbo...",
+    opis: "Kompaktowy SUV z dynamicznym silnikiem turbo.",
   },
   {
     id: 5,
@@ -77,7 +77,7 @@ let cars = [
       "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?q=80&w=800",
     daneTechniczne: { silnik: "1.6 Benzyna", moc: 105, spalanie: 7.5 },
     historiaSerwisowa: [{ opis: "Wymiana rozrządu", data: "2022-05-12" }],
-    opis: "Używane auto w dobrym stanie technicznym...",
+    opis: "Używany hatchback w przystępnej cenie.",
   },
   {
     id: 6,
@@ -91,7 +91,7 @@ let cars = [
       "https://images.unsplash.com/photo-1743114713466-f12a85992a75?q=80&w=800",
     daneTechniczne: { silnik: "2.5 SkyActiv-G", moc: 194, spalanie: 8.0 },
     historiaSerwisowa: [],
-    opis: "Przestronny SUV z dynamicznym silnikiem...",
+    opis: "Stylowy Suv do codziennej jazdy.",
   },
   {
     id: 7,
@@ -105,7 +105,7 @@ let cars = [
       "https://images.unsplash.com/photo-1606152421802-db97b9c7a11b?q=80&w=800",
     daneTechniczne: { silnik: "2.0 TFSI", moc: 204, spalanie: 6.8 },
     historiaSerwisowa: [{ opis: "Serwis A1", data: "2025-01-02" }],
-    opis: "Luksusowy sedan z zaawansowanymi technologiami...",
+    opis: "Luksusowy sedan z zaawansowanymi technologiami.",
   },
   {
     id: 8,
@@ -123,7 +123,7 @@ let cars = [
       spalanie: 6.4,
     },
     historiaSerwisowa: [],
-    opis: "Ekskluzywny sedan z nowoczesnym napędem mild hybrid...",
+    opis: "Ekskluzywny sedan z nowoczesnym napędem mild hybrid.",
   },
   {
     id: 9,
@@ -137,7 +137,7 @@ let cars = [
       "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?q=80&w=800",
     daneTechniczne: { silnik: "1.4 TSI", moc: 150, spalanie: 5.8 },
     historiaSerwisowa: [{ opis: "Wymiana akumulatora", data: "2024-11-20" }],
-    opis: "Popularny hatchback z dynamicznym silnikiem...",
+    opis: "Popularny hatchback z dynamicznym silnikiem.",
   },
 ];
 
