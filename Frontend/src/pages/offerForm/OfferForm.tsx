@@ -124,8 +124,10 @@ export const OfferForm: React.FC<OfferFormProps> = ({
 
           <div className="address-box">
             <label>Adres zamieszkania:</label>
+
             <input
-              placeholder="Ulica i numer"
+              className={errors.ulica ? "input-error" : ""}
+              placeholder="Ulica i nr"
               value={formData.adres.ulica}
               onChange={(e) =>
                 setFormData({
@@ -134,6 +136,8 @@ export const OfferForm: React.FC<OfferFormProps> = ({
                 })
               }
             />
+            {errors.ulica && <span className="error-text">{errors.ulica}</span>}
+
             <div className="form-row">
               <input
                 className={errors.kodPocztowy ? "input-error" : ""}
@@ -147,7 +151,9 @@ export const OfferForm: React.FC<OfferFormProps> = ({
                   })
                 }
               />
+
               <input
+                className={errors.miasto ? "input-error" : ""}
                 placeholder="Miasto"
                 style={{ flex: 2 }}
                 value={formData.adres.miasto}
@@ -159,9 +165,19 @@ export const OfferForm: React.FC<OfferFormProps> = ({
                 }
               />
             </div>
-            {errors.kodPocztowy && (
-              <span className="error-text">{errors.kodPocztowy}</span>
-            )}
+
+            <div className="form-row">
+              {errors.kodPocztowy && (
+                <span className="error-text" style={{ flex: 1 }}>
+                  {errors.kodPocztowy}
+                </span>
+              )}
+              {errors.miasto && (
+                <span className="error-text" style={{ flex: 2 }}>
+                  {errors.miasto}
+                </span>
+              )}
+            </div>
           </div>
 
           <div className="form-group">
