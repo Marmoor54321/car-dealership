@@ -1,12 +1,19 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../context/AuthContext";
 import { useCarContext } from "../../../context/CarContext";
 import "./PageHeader.css";
 
 const PageHeader: React.FC = () => {
   const { user, logout } = useAuth();
-  const { state } = useCarContext();
+  const { state, dispatch } = useCarContext();
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    dispatch({ type: "SET_USER", payload: null });
+    logout();
+    navigate("/");
+  };
 
   return (
     <nav className="main-nav">
@@ -41,7 +48,7 @@ const PageHeader: React.FC = () => {
             {user ? (
               <div className="user-info">
                 <span className="user-email">{user.email}</span>
-                <button onClick={logout} className="logout-button">
+                <button onClick={handleLogout} className="logout-button">
                   Wyloguj
                 </button>
               </div>

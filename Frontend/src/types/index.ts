@@ -42,10 +42,12 @@ export interface CarState {
   offers: Offer[];
 }
 
+export type UserRole = "ADMIN" | "USER";
+
 export interface User {
   id: string;
   email: string;
-  role: "ADMIN" | "USER";
+  role: UserRole;
 }
 
 export type PaymentMethod = "GOTÓWKA" | "LEASING";

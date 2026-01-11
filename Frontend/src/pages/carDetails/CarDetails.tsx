@@ -77,27 +77,27 @@ const CarDetails: React.FC = () => {
               <div className="not-available-banner">
                 Ten pojazd nie jest już dostępny w ofercie.
               </div>
-            ) : user?.role === "USER" ? (
-              <UniversalButton
-                onClick={() => setIsModalOpen(true)}
-                variant="primary"
-              >
-                Złóż ofertę zakupu
-              </UniversalButton>
-            ) : !user ? (
-              <div className="login-prompt-box">
-                <p>Zaloguj się, aby złożyć ofertę.</p>
-                <UniversalButton
-                  onClick={() => navigate("/login")}
-                  variant="secondary"
-                >
-                  Przejdź do logowania
-                </UniversalButton>
-              </div>
             ) : (
-              <p className="admin-preview-text">
-                Tryb podglądu administratora.
-              </p>
+              <>
+                {!user ? (
+                  <div className="login-prompt-box">
+                    <p>Zaloguj się jako klient, aby złożyć ofertę.</p>
+                    <UniversalButton
+                      onClick={() => navigate("/login")}
+                      variant="secondary"
+                    >
+                      Przejdź do logowania
+                    </UniversalButton>
+                  </div>
+                ) : user.role === "USER" ? (
+                  <UniversalButton
+                    onClick={() => setIsModalOpen(true)}
+                    variant="primary"
+                  >
+                    Złóż ofertę zakupu
+                  </UniversalButton>
+                ) : null}
+              </>
             )}
           </div>
         </div>

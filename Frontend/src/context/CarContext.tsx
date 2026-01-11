@@ -8,13 +8,25 @@ import type { ReactNode } from "react";
 import type { Car, CarState, Action } from "../types";
 import { carService } from "../services/carService";
 
+const getInitialUser = () => {
+  const savedUser = localStorage.getItem("user");
+  if (!savedUser) return null;
+  try {
+    return JSON.parse(savedUser);
+  } catch (error) {
+    console.error("Błąd parsowania użytkownika z localStorage:", error);
+    localStorage.removeItem("user");
+    return null;
+  }
+};
+
 const initialState: CarState = {
   cars: [],
   favorites: [],
   loading: false,
   error: null,
   offers: [],
-  user: null,
+  user: getInitialUser(),
 };
 
 const carReducer = (state: CarState, action: Action): CarState => {
@@ -73,7 +85,8 @@ interface CarContextType {
   deleteCar: (id: string) => Promise<void>;
 }
 
-const CarContext = createContext<CarContextType | undefined>(undefined);
+// eslint-disable-next-line react-refresh/only-export-components
+export const CarContext = createContext<CarContextType | undefined>(undefined);
 
 export const CarProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(carReducer, initialState);
@@ -124,6 +137,7 @@ export const CarProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useCarContext = () => {
   const context = useContext(CarContext);
   if (!context)

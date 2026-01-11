@@ -5,6 +5,7 @@ import "./Login.css";
 import { useAuth } from "../../context/AuthContext";
 import { UniversalButton } from "../../components/common/universalButton/UniversalButton";
 import { useCarContext } from "../../context/CarContext";
+import type { UserRole } from "../../types";
 
 interface LoginErrors {
   email?: string;
@@ -39,13 +40,21 @@ const Login = () => {
     try {
       await login(formData);
 
+      const userRole: UserRole = formData.email.includes("admin")
+        ? "ADMIN"
+        : "USER";
+
+      const loggedUser = {
+        id: Date.now().toString(),
+        email: formData.email,
+        role: userRole,
+      };
+
+      localStorage.setItem("user", JSON.stringify(loggedUser));
+
       dispatch({
         type: "SET_USER",
-        payload: {
-          id: Date.now().toString(),
-          email: formData.email.split("@")[0],
-          role: "USER",
-        },
+        payload: loggedUser,
       });
 
       navigate("/");
