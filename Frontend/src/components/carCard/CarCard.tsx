@@ -33,8 +33,9 @@ export const CarCard = ({ car }: CarCardProps) => {
 
       <div className="car-image-placeholder">
         <img
-          src={`https://placehold.co/600x400?text=${car.marka}+${car.model}`}
+          src={car.image}
           alt={`${car.marka} ${car.model}`}
+          className="car-card-img"
         />
       </div>
       <div className="car-content">

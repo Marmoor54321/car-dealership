@@ -34,6 +34,7 @@ const CarForm = () => {
     dostepny: true,
     daneTechniczne: { silnik: "", moc: 0, spalanie: 0 },
     historiaSerwisowa: [],
+    image: "",
   });
 
   const [errors, setErrors] = useState<FormErrors>({});
@@ -316,6 +317,31 @@ const CarForm = () => {
             <label htmlFor="dostepny">Pojazd jest dostępny w ofercie</label>
           </div>
         </section>
+        <div className="form-group">
+          <label>Link do zdjęcia (URL):</label>
+          <input
+            type="text"
+            placeholder="https://images.unsplash.com/..."
+            value={formData.image}
+            onChange={(e) =>
+              setFormData({ ...formData, image: e.target.value })
+            }
+            className="form-input"
+          />
+          {formData.image && (
+            <div className="image-preview">
+              <img
+                src={formData.image}
+                alt="Podgląd"
+                style={{
+                  width: "200px",
+                  marginTop: "10px",
+                  borderRadius: "4px",
+                }}
+              />
+            </div>
+          )}
+        </div>
 
         <div className="form-actions">
           <UniversalButton type="submit" variant="primary">

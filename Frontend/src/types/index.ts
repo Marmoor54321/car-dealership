@@ -20,6 +20,7 @@ export interface Car {
   dostepny: boolean;
   daneTechniczne: TechnicalData;
   historiaSerwisowa: ServiceEntry[];
+  image: string;
 }
 
 export type Action =
