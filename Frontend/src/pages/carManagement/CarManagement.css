@@ -1,0 +1,79 @@
+.management-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.management-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.management-header h2 {
+  margin: 0;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.management-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.management-table thead tr {
+  background-color: #f8f9fa;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.management-table th,
+.management-table td {
+  padding: 16px;
+}
+
+.management-table tbody tr {
+  border-bottom: 1px solid #eee;
+  transition: background-color 0.2s;
+}
+
+.management-table tbody tr:hover {
+  background-color: #fcfcfc;
+}
+
+.car-main-info {
+  font-weight: bold;
+}
+
+.car-sub-info {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.status-badge {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.status-available {
+  background-color: #e6f4ea;
+  color: #1e7e34;
+}
+
+.status-sold {
+  background-color: #fce8e8;
+  color: #c82333;
+}
+
+.actions-cell {
+  display: flex;
+  gap: 10px;
+}
