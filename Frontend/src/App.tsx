@@ -6,7 +6,7 @@ import CarDetails from "./pages/carDetails/CarDetails";
 import CarForm from "./pages/carForm/CarForm";
 import NotFound from "./pages/NotFound";
 import CarManagement from "./pages/CarManagement";
-import Login from "./pages/Login";
+import Login from "./pages/login/Login";
 import Register from "./pages/Register";
 import { ProtectedRoute } from "./components/common/protectedRoute/ProtectedRoute";
 import "./App.css";

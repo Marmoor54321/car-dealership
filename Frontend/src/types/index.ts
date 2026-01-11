@@ -23,27 +23,49 @@ export interface Car {
 }
 
 export type Action =
+  | { type: "SET_USER"; payload: User | null }
   | { type: "SET_CARS"; payload: Car[] }
   | { type: "ADD_CAR"; payload: Car }
   | { type: "UPDATE_CAR"; payload: Car }
   | { type: "DELETE_CAR"; payload: string }
   | { type: "TOGGLE_FAVORITE"; payload: string }
   | { type: "SET_LOADING"; payload: boolean }
-  | { type: "SET_ERROR"; payload: string | null };
+  | { type: "SET_ERROR"; payload: string | null }
+  | { type: "ADD_OFFER"; payload: Offer };
 
 export interface CarState {
   cars: Car[];
   favorites: string[];
   loading: boolean;
+  user: User | null;
   error: string | null;
+  offers: Offer[];
 }
-
-export type UserRole = "ADMIN" | "USER";
 
 export interface User {
   id: string;
   email: string;
-  role: UserRole;
+  role: "ADMIN" | "USER";
+}
+
+export type PaymentMethod = "GOTÓWKA" | "LEASING";
+
+export interface Address {
+  ulica: string;
+  miasto: string;
+  kodPocztowy: string;
+}
+
+export interface Offer {
+  id: string;
+  carId: string;
+  imie: string;
+  nazwisko: string;
+  adres: Address;
+  telefon: string;
+  metodaPlatnosci: PaymentMethod;
+  preferowaneMarki: string[];
+  dataZlozenia: string;
 }
 
 export interface LoginCredentials {
@@ -53,7 +75,7 @@ export interface LoginCredentials {
 
 export interface RegisterData extends LoginCredentials {
   username: string;
-  role: UserRole;
+  role: "ADMIN" | "USER";
 }
 
 export interface AuthContextType {

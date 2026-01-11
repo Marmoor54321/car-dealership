@@ -13,12 +13,19 @@ const initialState: CarState = {
   favorites: [],
   loading: false,
   error: null,
+  offers: [],
+  user: null,
 };
 
 const carReducer = (state: CarState, action: Action): CarState => {
   switch (action.type) {
     case "SET_CARS":
       return { ...state, cars: action.payload, loading: false };
+    case "SET_USER":
+      return {
+        ...state,
+        user: action.payload,
+      };
     case "ADD_CAR":
       return { ...state, cars: [...state.cars, action.payload] };
     case "UPDATE_CAR":
@@ -43,6 +50,11 @@ const carReducer = (state: CarState, action: Action): CarState => {
 
       return { ...state, favorites: newFavorites };
     }
+    case "ADD_OFFER":
+      return {
+        ...state,
+        offers: [...state.offers, action.payload],
+      };
     case "SET_LOADING":
       return { ...state, loading: action.payload };
     case "SET_ERROR":

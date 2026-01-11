@@ -1,16 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { carService } from "../../services/carService";
-import type { Car } from "../../types";
+import type { Car, Offer } from "../../types";
 import { StatusBadge } from "../../components/common/statusBadge/StatusBadge";
 import { UniversalButton } from "../../components/common/universalButton/UniversalButton";
 import "./CarDetails.css";
+import { useCarContext } from "../../context/CarContext";
+import { OfferForm } from "../offerForm/OfferForm";
 
 const CarDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [car, setCar] = useState<Car | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const { state, dispatch } = useCarContext();
+  const { user } = state;
 
   useEffect(() => {
     const fetchCar = async () => {
@@ -28,6 +34,18 @@ const CarDetails: React.FC = () => {
 
     fetchCar();
   }, [id]);
+
+  const handleOfferSubmit = (offerData: Omit<Offer, "id" | "dataZlozenia">) => {
+    const finalOffer: Offer = {
+      ...offerData,
+      id: Date.now().toString(),
+      dataZlozenia: new Date().toISOString(),
+    };
+
+    dispatch({ type: "ADD_OFFER", payload: finalOffer });
+    setIsModalOpen(false);
+    alert("Twoja oferta została przesłana pomyślnie!");
+  };
 
   if (loading)
     return <div className="loading">Ładowanie danych technicznych...</div>;
@@ -53,6 +71,35 @@ const CarDetails: React.FC = () => {
             <br />
             <span>Przebieg: {car.przebieg.toLocaleString()} km</span>
           </div>
+
+          <div className="offer-actions-container">
+            {!car.dostepny ? (
+              <div className="not-available-banner">
+                Ten pojazd nie jest już dostępny w ofercie.
+              </div>
+            ) : user?.role === "USER" ? (
+              <UniversalButton
+                onClick={() => setIsModalOpen(true)}
+                variant="primary"
+              >
+                Złóż ofertę zakupu
+              </UniversalButton>
+            ) : !user ? (
+              <div className="login-prompt-box">
+                <p>Zaloguj się, aby złożyć ofertę.</p>
+                <UniversalButton
+                  onClick={() => navigate("/login")}
+                  variant="secondary"
+                >
+                  Przejdź do logowania
+                </UniversalButton>
+              </div>
+            ) : (
+              <p className="admin-preview-text">
+                Tryb podglądu administratora.
+              </p>
+            )}
+          </div>
         </div>
       </div>
 
@@ -66,7 +113,7 @@ const CarDetails: React.FC = () => {
       <div className="details-grid">
         <section className="specs-section">
           <h3>Parametry techniczne</h3>
-          <ul>
+          <ul className="specs-list">
             <li>
               <strong>Silnik:</strong> {car.daneTechniczne.silnik}
             </li>
@@ -97,6 +144,15 @@ const CarDetails: React.FC = () => {
           )}
         </section>
       </div>
+
+      {isModalOpen && (
+        <OfferForm
+          carId={car.id}
+          carName={`${car.marka} ${car.model}`}
+          onClose={() => setIsModalOpen(false)}
+          onSubmit={handleOfferSubmit}
+        />
+      )}
     </div>
   );
 };
