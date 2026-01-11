@@ -53,7 +53,6 @@ const CarDetails: React.FC = () => {
 
   return (
     <div className="car-details-page">
-      {/* Pasek górny z nawigacją i statusem */}
       <div className="details-top-bar">
         <UniversalButton onClick={() => navigate(-1)} variant="secondary">
           ← Powrót
@@ -61,7 +60,6 @@ const CarDetails: React.FC = () => {
         <StatusBadge dostepny={car.dostepny} />
       </div>
 
-      {/* SEKCJA GŁÓWNA (Hero): Informacje + Zdjęcie */}
       <div className="details-hero">
         <div className="details-info-side">
           <h1>

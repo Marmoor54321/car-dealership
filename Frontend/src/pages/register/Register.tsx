@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { isAxiosError } from "axios";
-import "./Register.css"; // 1. Importujemy plik CSS
+import "./Register.css";
 import { UniversalButton } from "../../components/common/universalButton/UniversalButton";
 import { useAuth } from "../../context/AuthContext";
 
