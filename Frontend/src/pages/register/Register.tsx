@@ -53,11 +53,19 @@ const Register = () => {
       navigate("/");
     } catch (err: unknown) {
       if (isAxiosError(err)) {
-        setErrors({
-          server: err.response?.data?.message || "Rejestracja nieudana.",
-        });
+        if (err.response) {
+          setErrors({
+            server:
+              err.response.data?.message ||
+              "Użytkownik o tym adresie e-mail jest już zarejestrowany.",
+          });
+        } else {
+          setErrors({ server: "Błąd połączenia z serwerem. Spróbuj później." });
+        }
       } else {
-        setErrors({ server: "Wystąpił nieoczekiwany błąd." });
+        setErrors({
+          server: "Użytkownik o tym adresie e-mail jest już zarejestrowany.",
+        });
       }
     }
   };
