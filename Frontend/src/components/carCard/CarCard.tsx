@@ -22,14 +22,18 @@ export const CarCard = ({ car }: CarCardProps) => {
 
   return (
     <div className="car-card">
-      {canSeeFavorites && (
-        <button
-          className={`favorite-btn ${isFavorite ? "active" : ""}`}
-          onClick={handleToggleFavorite}
-        >
-          {isFavorite ? "❤️" : "🤍"}
-        </button>
-      )}
+      <div className="car-top-actions">
+        <StatusBadge dostepny={car.dostepny} />
+
+        {canSeeFavorites && (
+          <button
+            className={`favorite-btn ${isFavorite ? "active" : ""}`}
+            onClick={handleToggleFavorite}
+          >
+            {isFavorite ? "❤️" : "🤍"}
+          </button>
+        )}
+      </div>
 
       <div className="car-image-placeholder">
         <img
@@ -38,13 +42,14 @@ export const CarCard = ({ car }: CarCardProps) => {
           className="car-card-img"
         />
       </div>
+
       <div className="car-content">
         <div className="car-header">
           <h3>
             {car.marka} {car.model}
           </h3>
-          <StatusBadge dostepny={car.dostepny} />
         </div>
+
         <p className="car-year">Rocznik: {car.rokProdukcji}</p>
         <p className="car-price">{car.cena.toLocaleString()} PLN</p>
 
